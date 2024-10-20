@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class timer : MonoBehaviour
+public class TimerManager : MonoBehaviour
 {
     // public Text timerText;
     public TextMeshProUGUI timerText;

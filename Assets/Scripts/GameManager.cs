@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public TimerManager timerManager;
+    public Button resetButton;
 
     public string[] correctSequences;
     private int currentStep;
@@ -19,7 +22,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         maxStep = checkListItems.Length - 1;
-        UpdateScoreText();
+        resetButton.onClick.AddListener(ResetScore);
+        ResetScore();
     }
 
     void UpdateScoreText(){
@@ -62,7 +66,7 @@ public class GameManager : MonoBehaviour
     void CorrectClick()
     {
         // Mark the corresponding checklist item as completed
-        checkListItems[currentStep].text = "✓ " + checkListItems[currentStep].text;
+        checkListItems[currentStep].text = "✓ " + correctSequences[currentStep];
 
         // Increase score
         score += 10;
@@ -87,5 +91,16 @@ public class GameManager : MonoBehaviour
         UpdateScoreText();
 
         Debug.Log("Wrong item clicked!");
+    }
+
+    void ResetScore(){
+        score = 0;
+        currentStep = 0;
+        scoreText.text = "Score : "+score;
+        foreach (var item in checkListItems)
+        {  
+           item.text = "...."; 
+        }
+        timerManager.ResetTimer();
     }
 }
